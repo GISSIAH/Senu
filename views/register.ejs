@@ -1,0 +1,101 @@
+<style>
+body{  
+    margin: 0;  
+    padding: 0;  
+    background-color:#ffffff;  
+    font-family: 'Arial';  
+}  
+.login{  
+        width: 382px;  
+        overflow: hidden;  
+        margin: auto;  
+        margin: 20 0 0 450px;  
+        padding: 80px;  
+        background: #23463f;  
+        border-radius: 15px ;  
+          
+}  
+h2{  
+    text-align: center;  
+    color: #277582;  
+    padding: 20px;  
+}  
+label{  
+    color: #08ffd1;  
+    font-size: 17px;  
+}  
+#Uname{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;  
+}  
+#Pass{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 3px;  
+    padding-left: 8px;  
+      
+}  
+#log{  
+    width: 300px;  
+    height: 30px;  
+    border: none;  
+    border-radius: 17px;  
+    padding-left: 7px;  
+    color: rgb(0, 0, 0);  
+  
+  
+}  
+span{  
+    color: white;  
+    font-size: 17px;  
+}  
+a{  
+    float: right;  
+    background-color: #08ffd1;
+}
+.mt-4{
+  color: #08ffd1;
+} 
+
+
+</style>
+
+<h2>Register</h2><br>
+<div class="login"> 
+  <% include ./partials/messages %>      
+<form id="login" method="POST" action="/users/register">
+  <label><b>Full Name     
+  </b>    
+  </label>    
+  <input type="text" name="name" id="Uname" placeholder="Name">    
+  <br><br>    
+    <label><b>User Email    
+    </b>    
+    </label>    
+    <input type="email" name="email" id="Uname" placeholder="Email">    
+    <br><br>    
+    <label><b>Password     
+    </b>    
+    </label>    
+    <input type="Password" name="password" id="Pass" placeholder="Password"
+    value="<%= typeof password != 'undefined' ? password : '' %>">    
+    <br><br>
+    <label><b>Confirm Password     
+    </b>    
+    </label>    
+    <input type="Password" name="password2" id="Pass" placeholder="Confirm Your Password" 
+    value="<%= typeof password2 != 'undefined' ? password2 : '' %>">    
+    <br><br>     
+    <input type="submit" name="log" id="log" value="Register">       
+    <br><br>    
+    
+    <br><br>    
+    <p class="lead mt-4">
+      Already have an account? <a href="/users/login">Login</a>
+    </p>    
+</form>  
+      

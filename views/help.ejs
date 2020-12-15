@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+    <head>
+    <title>Help</title>
+    <style>
+h2 {
+color: rgb(87, 141, 96);
+  display: block;
+  font-size: 2.0em;
+  margin-top: 0.83em;
+  margin-bottom: 0.83em;
+  margin-left: 0;
+  margin-right: 0;
+  font-weight: bold;
+}
+p{
+    color:black;
+  text-indent: 30px;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1.3em;
+}
+        .sidepanel {
+        height: 700px; /* Specify a height */
+        width: 200px; /* 0 width - change this with JavaScript */
+        position: fixed; /* Stay in place */
+        z-index: 1; /* Stay on top */
+        top: 0;
+        left: 0;
+        background-color: rgb(100, 218, 125); /* Black*/
+        overflow-x: hidden; /* Disable horizontal scroll */
+        padding-top: 60px; /* Place content 60px from the top */
+        transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
+        }
+
+
+.sidepanel a {
+        padding: 8px 8px 8px 32px;
+        text-decoration: none;
+        font-size: 20px;
+        color: #494949;
+        display: block;
+        transition: 0.3s;
+        }
+
+
+.sidepanel a:hover {
+  color: #f1f1f1;
+}
+    .h2{
+        font-size: 20px;
+        color:rgb(232, 14, 242);
+    }
+    
+    </style>
+    </head>
+    <body>
+        <header>
+            <div class="header">
+                <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+                <a href="/entry" class="btn btn-secondary">Enter Data</a>
+                <a href="/senu" class="btn btn-secondary">Go to Map</a>
+            </div> 
+        </header>
+        <main>
+            <div id="mySidepanel" class="sidepanel">
+                <a href="#intro">Getting started</a>
+                <a href="#login">Logging in</a>
+                <a href="#entry">Entering data</a>
+                <a href="#map">Viewing map</a>
+              </div>
+        <section>
+            <div id="intro">
+                <h2>Hello there</h2>
+                <p>This is a senu, a real time geographical information system that provides access to spatial temporal data from several hospitals.<br>
+                For one to view various resources of the system he/she must be registered.<a href="/users/register">Register here</a></p> <br>
+            </div>  
+        </section>
+             
+        
+        <section>
+            <div id="login" c>
+                <h2>Logging in to the system</h2>
+                <p>To login you must provide the email and password that you registered with on this page.<a href="/users/login">Login here</a></p> <br>
+            </div>  
+        </section>
+
+        <section>
+            <div id="entry" c>
+                <h2>Entering data</h2>
+                <p>To enter data into the system, you must first .<a href="/users/register">Register here</a></p> <br>
+
+            </div>  
+        </section>
+        
+        <section>
+            <div id="map" c>
+                <h2>Viewing map</h2>
+            </div>  
+        </section>
+
+
+
+        
+
+
+
+
+
+
+
+
+
+        </main>
+        
+
+
+
+
+
+    </body>
+    
+</html>

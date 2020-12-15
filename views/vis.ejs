@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SENU</title>
+    <!-- Openlayers -->
+    <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
+    <script type="text/javascript" src="https://openlayers.org/en/latest/build/ol.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"/>
+     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
+    
+    <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.js"></script>
+    <!-- ol-ext -->
+    <link rel="stylesheet" href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css" />
+    <script type="text/javascript" src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"></script>
+    <style>
+        .body {
+          font-family: "Roboto", Helvetica, Arial, sans-serif;
+          font-weight: 100;
+          font-size: 12px;
+          line-height: 30px;
+          color: #777;
+          background: #36a0bb;
+        }
+
+        .map {
+          height: 400px;
+          width: 100%;
+        }
+        .graph{
+          height:300px; 
+        }
+        .overlay-container{
+          background-color:blueviolet;
+          width: 150px;
+          color: white;
+          text-align: center;
+          border-radius: 1px;
+          padding: 2px 0;
+          position: absolute;
+          z-index: 1;
+          bottom: 100%;
+        }
+        .line {
+   fill: none;
+   stroke: green;
+   stroke-width: 5px;
+}
+      </style>
+</head>
+
+<body >
+    <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
+    <div id="update">
+      <p>Lastly updated on:<%=time%></p>
+
+    </div>
+  
+    <div id="map" class="map" ></div>
+    <div id="g" class="graph" >
+      <canvas id="myChart" ></canvas>
+    </div>
+
+    
+    <script type="text/javascript">
+    // Layers
+    var layers = [
+        new ol.layer.Tile({
+            source: new ol.source.OSM()
+        })
+    ]
+    // The map
+    var map = new ol.Map
+        ({  target: 'map',
+            view: new ol.View
+            ({  zoom: 11,
+                center: [35.077885,-15.770264],
+                projection:'EPSG:4326'
+            }),
+            layers: layers
+        });
+      
+      var url = 'http://localhost:5000/local/recent'
+      var vsource = new ol.source.Vector({
+            url:url,
+            format: new ol.format.GeoJSON()
+          })
+      var hos = new ol.layer.VectorImage({
+          source:vsource,
+          visible:true,
+          title:'HOSPITALS'
+          
+      });
+      console.log(hos)
+      map.addLayer(hos);
+      
+      
+      var select = new ol.interaction.Select({})
+      map.addInteraction(select)
+
+    var search = new ol.control.SearchFeature(
+        {   
+            source: vsource,
+            property:'name'
+        });
+    map.addControl(search);
+
+    // Select feature when click on the reference index
+    search.on('select', function(e)
+        {   select.getFeatures().clear();
+            select.getFeatures().push (e.search);
+            var p = e.search.getGeometry().getFirstCoordinate();
+            map.getView().animate({ center:p });
+        });
+    var popup = new ol.Overlay.PopupFeature({
+    popupClass: 'default anim',
+    select: select,
+    canFix: true,
+    template: {
+        title: 
+          // 'nom',   // only display the name
+          function(f) {
+            return f.get('name');
+          },
+        attributes: // [ 'region', 'arrond', 'cantons', 'communes', 'pop' ]
+        {
+          'type': { title: 'Type' },
+          'admitted': { title: 'Admitted' },
+          'doctors': { title: 'Doctors' },
+          'nurses': { title: 'Nurses' },
+          'time':{title:'Time'}
+        }
+    }
+  });
+  
+  map.addOverlay (popup);
+  map.on('click',(e)=>{
+  map.forEachFeatureAtPixel(e.pixel,(feature,layer)=>{
+
+      const name=feature.get('name');
+      //const d = new Date().getDate()
+      const d = '02';
+      const m = new Date().getMonth() + 1
+      const y = new Date().getFullYear()
+
+      const graphlink = `http://localhost:5000/daily/?d=${d}&m=${m}&y=${y}&id=${name}`
+            axios({
+                    url: graphlink,
+                    method: 'get'
+            }).then(res=>{
+      var lbs = []
+      var dt = []
+      var dt_doc = []
+      var dt_nrs = []
+      
+      res.data.features.forEach(element=>{
+      lbs.push(element.hour)
+      dt.push(element.admitted)
+      dt_doc.push(element.doctors)
+      dt_nrs.push(element.nurses)
+  })
+  var ctx = document.getElementById('myChart').getContext('2d');
+  var myChart = new Chart(ctx, {
+    type: 'bar',
+    data: {
+        labels: lbs,
+        datasets: [{
+            label: 'Admitted',
+            data: dt,
+            barThickness: 21,
+            maxBarThickness: 30,
+            minBarLength: 0.4,
+            backgroundColor: 'turquoise',
+            borderWidth: 1
+        },
+        {
+            label: 'Doctors',
+            data: dt_doc,
+            barThickness: 21,
+            maxBarThickness: 30,
+            minBarLength: 0.4,
+            backgroundColor: 'darkblue',
+            borderWidth: 1
+        },
+        {
+            label: 'Nurses',
+            data: dt_nrs,
+            barThickness: 21,
+            maxBarThickness: 30,
+            minBarLength: 0.4,
+            backgroundColor: 'beige',
+            borderWidth: 1
+        }
+      
+      ]
+    },
+    options: {
+      maintainAspectRatio: false,
+      scales: {
+            yAxes: [{
+                ticks: {
+                          beginAtZero: true
+                      }
+                  }]
+              }
+          }
+        });
+            })
+
+
+    })
+  })
+/*
+  let i = document.querySelector('input'),
+  o = document.querySelector('output');
+  o.innerHTML = i.value;
+//
+  i.addEventListener('input', function () {
+  map.removeLayer(hos)
+  o.innerHTML = i.value;
+  const d=decide(new Date().getDay())
+  const h = decide(i.value)
+  const m= new Date().getMonth()
+  const url = `http://localhost:5000/local/specific/?d=16&h=${h}&m=11`
+  var vsource = new ol.source.Vector({
+        url:url,
+        format: new ol.format.GeoJSON()
+      })
+  var new_hos = new ol.layer.VectorImage({
+      source:vsource,
+      visible:true,
+      title:'HOSPITALS'
+  });
+  console.log(new_hos)
+  map.addLayer(new_hos);
+      
+
+  }, false);
+  */
+  function decide(hour){
+    if (hour<10){
+      return '0'+hour;
+    }else{
+      return hour
+    }
+  }
+    </script>
+    
+</body>
+</html>

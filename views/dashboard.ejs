@@ -1,0 +1,100 @@
+<style>
+  body{
+    
+  }
+    .mt-4{
+        margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-size: 40px;
+	line-height: 35px;
+	font-weight: normal;
+	font-family: 'Orienta', sans-serif;
+    }
+    .lead-mb-3{
+        padding: 20px;
+    margin: 1em 0 0.5em 0;
+	color: #343434;
+	font-size: 25px;
+	line-height: 20px;
+	font-weight: normal;
+	font-family: 'Orienta', sans-serif;
+    }
+    .btn-secondary{
+        background-color: rgb(39, 194, 52);
+        color: white;
+        border-radius: 25px;
+        padding: 1em 1.5em;
+        text-decoration: none;
+    text-transform: uppercase;
+    }
+    .links{
+        position:absolute;
+    top:50px;
+    right: 10px;
+    }
+    .card {
+  border-radius: 25px;
+  background-color: burlywood;
+  box-shadow: 0 0px 0px 0 rgba(27, 163, 38, 0.2);
+  transition: 0.3s;
+  width: 400px;
+  margin: 10px;
+}
+
+/* On mouse-over, add a deeper shadow */
+.card:hover {
+  box-shadow: 0 8px 8px 0 rgba(59, 230, 144, 0.2);
+}
+
+/* Add some padding inside the card container */
+.cont{
+  padding: 50px 50px;
+}
+.group{
+    display: flex;
+    align-content: space-around;
+    align-items: flex-end;
+  flex-wrap: wrap;
+  margin-right: 2em;
+  position:absolute;
+  padding: 10px;
+  justify-content: space-between;
+  left: 400px;
+}
+    
+</style>
+
+
+<body>
+  <h1 class="mt-4">Dashboard</h1>
+<p class="lead-mb-3">Welcome <%= user.name %></p>
+
+
+<div class="group">
+    <div class="card">
+    
+        <div class="cont">
+          <h4><a href="/entry" class="btn btn-secondary">Enter Data</a></br></h4>
+          <p>Enter data from your hospital</p>
+        </div>
+      </div>
+    
+    <div class="card">
+        
+        <div class="cont">
+          <h4><a href="/senu" class="btn btn-secondary">Go to Map</a></br></h4>
+          <p>Enter data from your hospital</p>
+        </div>
+      </div>
+</div>
+
+
+<div class="links">
+    
+    <a href="/help" class="btn btn-secondary">Help</a>
+    <a href="/users/logout" class="btn btn-secondary">Logout</a>
+
+</div>
+</body>
+
+

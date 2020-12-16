@@ -19,7 +19,7 @@ router.get("/help", (req, res) => {
 //Visualization page
 router.get("/senu", ensureAuthenticated, (req, res) => {
   axios
-    .get("http://localhost:5000/uptime")
+    .get("https://senu-back.herokuapp.com/uptime")
     .then(function (data) {
       res.render("vis", {
         time: data.data.Latest,
@@ -46,7 +46,7 @@ router.post("/entry", ensureAuthenticated, (req, res) => {
   };
 
   axios
-    .post("http://localhost:5000", new_body)
+    .post("https://senu-back.herokuapp.com", new_body)
     .then((data) => {
       console.log(data);
     })

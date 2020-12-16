@@ -81,7 +81,7 @@
             layers: layers
         });
       
-      var url = 'http://localhost:5000/local/recent'
+      var url = 'https://senu-back.herokuapp.com/local/recent'
       var vsource = new ol.source.Vector({
             url:url,
             format: new ol.format.GeoJSON()
@@ -144,7 +144,7 @@
       const m = new Date().getMonth() + 1
       const y = new Date().getFullYear()
 
-      const graphlink = `http://localhost:5000/daily/?d=${d}&m=${m}&y=${y}&id=${name}`
+      const graphlink = `https://senu-back.herokuapp.com/daily/?d=${d}&m=${m}&y=${y}&id=${name}`
             axios({
                     url: graphlink,
                     method: 'get'

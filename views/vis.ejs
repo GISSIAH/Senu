@@ -139,8 +139,7 @@
   map.forEachFeatureAtPixel(e.pixel,(feature,layer)=>{
 
       const name=feature.get('name');
-      //const d = new Date().getDate()
-      const d = '02';
+      const d = new Date().getDate()
       const m = new Date().getMonth() + 1
       const y = new Date().getFullYear()
 
@@ -159,7 +158,7 @@
       dt.push(element.admitted)
       dt_doc.push(element.doctors)
       dt_nrs.push(element.nurses)
-  })
+    })
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -211,33 +210,7 @@
 
     })
   })
-/*
-  let i = document.querySelector('input'),
-  o = document.querySelector('output');
-  o.innerHTML = i.value;
-//
-  i.addEventListener('input', function () {
-  map.removeLayer(hos)
-  o.innerHTML = i.value;
-  const d=decide(new Date().getDay())
-  const h = decide(i.value)
-  const m= new Date().getMonth()
-  const url = `http://localhost:5000/local/specific/?d=16&h=${h}&m=11`
-  var vsource = new ol.source.Vector({
-        url:url,
-        format: new ol.format.GeoJSON()
-      })
-  var new_hos = new ol.layer.VectorImage({
-      source:vsource,
-      visible:true,
-      title:'HOSPITALS'
-  });
-  console.log(new_hos)
-  map.addLayer(new_hos);
-      
 
-  }, false);
-  */
   function decide(hour){
     if (hour<10){
       return '0'+hour;

@@ -1,122 +1,137 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    <title>Help</title>
-    <style>
-h2 {
-color: rgb(87, 141, 96);
+<style>
+    @import url('https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  list-style: none;
+  text-decoration: none;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+body{
+   background-color: #f3f5f9;
+}
+
+.wrapper{
+  display: flex;
+  position: relative;
+}
+
+.wrapper .sidebar{
+  width: 350px;
+  height: 100%;
+  background:  #4CAF50;
+  padding: 30px 0px;
+  position: fixed;
+}
+
+.wrapper .sidebar h2{
+  color: #fff;
+  text-transform: uppercase;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.wrapper .sidebar ul li{
+  padding: 15px;
+  border-bottom: 1px solid #bdb8d7;
+  border-bottom: 1px solid rgba(0,0,0,0.05);
+  border-top: 1px solid rgba(255,255,255,0.05);
+}    
+
+.wrapper .sidebar ul li a{
+  color: white;
   display: block;
-  font-size: 2.0em;
-  margin-top: 0.83em;
-  margin-bottom: 0.83em;
-  margin-left: 0;
-  margin-right: 0;
-  font-weight: bold;
 }
-p{
-    color:black;
-  text-indent: 30px;
-  font-family: 'Times New Roman', Times, serif;
-  font-size: 1.3em;
+
+.wrapper .sidebar ul li a .fas{
+  width: 25px;
 }
-        .sidepanel {
-        height: 700px; /* Specify a height */
-        width: 200px; /* 0 width - change this with JavaScript */
-        position: fixed; /* Stay in place */
-        z-index: 1; /* Stay on top */
-        top: 0;
-        left: 0;
-        background-color: rgb(100, 218, 125); /* Black*/
-        overflow-x: hidden; /* Disable horizontal scroll */
-        padding-top: 60px; /* Place content 60px from the top */
-        transition: 0.5s; /* 0.5 second transition effect to slide in the sidepanel */
-        }
 
-
-.sidepanel a {
-        padding: 8px 8px 8px 32px;
-        text-decoration: none;
-        font-size: 20px;
-        color: #494949;
-        display: block;
-        transition: 0.3s;
-        }
-
-
-.sidepanel a:hover {
-  color: #f1f1f1;
+.wrapper .sidebar ul li:hover{
+  background-color: burlywood;
 }
-    .h2{
-        font-size: 20px;
-        color:rgb(232, 14, 242);
-    }
-    
-    </style>
-    </head>
-    <body>
-        <header>
-            <div class="header">
-                <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
-                <a href="/entry" class="btn btn-secondary">Enter Data</a>
-                <a href="/senu" class="btn btn-secondary">Go to Map</a>
-            </div> 
-        </header>
-        <main>
-            <div id="mySidepanel" class="sidepanel">
-                <a href="#intro">Getting started</a>
-                <a href="#login">Logging in</a>
-                <a href="#entry">Entering data</a>
-                <a href="#map">Viewing map</a>
-              </div>
-        <section>
-            <div id="intro">
-                <h2>Hello there</h2>
-                <p>This is a senu, a real time geographical information system that provides access to spatial temporal data from several hospitals.<br>
-                For one to view various resources of the system he/she must be registered.<a href="/users/register">Register here</a></p> <br>
-            </div>  
-        </section>
-             
+.wrapper .sidebar ul li:hover a{
+  color: #fff;
+}
+ 
+.wrapper .main_content{
+  width: 100%;
+  margin-left: 350px;
+  
+}
+
+.wrapper .main_content .header{
+  padding: 20px;
+  background: #fff;
+  color: #717171;
+  border-bottom: 1px solid #e0e4e8;
+}
+
+.wrapper .main_content .info{
+  margin: 20px;
+  color: #000000;
+  line-height: 50px;
+  font-size: larger;
+}
+.wrapper .main_content .info a{
+  color: red;
+}
+
+.wrapper .main_content .info div{
+  margin-bottom: 20px;
+}
+
+
+</style>
+
+<body>
+    <script src="https://kit.fontawesome.com/b99e675b6e.js"></script>
+
+<div class="wrapper">
+    <div class="sidebar">
+        <h2>SENU</h2>
+        <ul>
+            <li><a href="/"><i class="fas fa-home"></i>Home</a></li>
+            <li><a href="/dashboard"><i class="fas fa-user"></i>Profile</a></li>
+            <li><a href="/entry"><i class="fas fa-map-pin"></i>Enter Data</a></li>
+            <li><a href="/senu"><i class="fas fa-map-pin"></i>Map</a></li>
+            <li><a href="/contact"><i class="fas fa-address-book"></i>Contact</a></li>
+        </ul> 
         
-        <section>
-            <div id="login" c>
+    </div>
+    <div class="main_content">
+        <div class="header">Welcome To Senu's Help Center.</div>  
+        <div class="info">
+            <div id="intro">
+                <p>This is a senu, a real time geographical information system that provides access to spatial temporal data from several hospitals.<br>
+                For one to view various resources of the system he/she must be registered.</p> <br>
+                <img src="/reg.png"  alt="register">
+                <p>The user must fill in his or her full name, email and must enter the passowrd twice to confirm it. After subtmiting that information a user is succesfully registered to use the system</p><br>
+                <a href="/users/register">Click here To Register!</a>
+            </div>
+            
+            <div id="login">
                 <h2>Logging in to the system</h2>
                 <p>To login you must provide the email and password that you registered with on this page.<a href="/users/login">Login here</a></p> <br>
-            </div>  
-        </section>
-
-        <section>
-            <div id="entry" c>
+                <img src="/log.png"  alt="login">
+                <p>The user must fill in his or her email and the passowrd they registered with the system. If there is a problem with the credentials the system displays a label ontop otherwise the user is succesfully logged in</p><br>
+            </div>
+            
+            <div id="entry">
                 <h2>Entering data</h2>
                 <p>To enter data into the system, you must first .<a href="/users/register">Register here</a></p> <br>
-
             </div>  
-        </section>
-        
-        <section>
+            
             <div id="map" c>
                 <h2>Viewing map</h2>
-            </div>  
-        </section>
+                <p>To visualize data on the map, you must make sure to be logged in the system. The page loads the recent data from the database for each hospital.The data is represented as points on the map with a circular shape in a light blue color<br></p>
+            </div>
 
+          </div>
+    </div>
+</div>
 
-
-        
-
-
-
-
-
-
-
-
-
-        </main>
-        
-
-
-
-
-
-    </body>
-    
-</html>
+</body>

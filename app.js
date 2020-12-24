@@ -10,6 +10,7 @@ app.use(express.static('public'))
 // Passport Config
 require('./config/passport')(passport);
 
+
 // DB Config
 const db = require('./config/keys').mongoURI;
 

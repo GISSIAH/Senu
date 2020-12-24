@@ -2,16 +2,13 @@
 <html>
 <head>
     <title>SENU</title>
-    <!-- Openlayers -->
     <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
     <script type="text/javascript" src="https://openlayers.org/en/latest/build/ol.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"/>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
-    
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.js"></script>
-    <!-- ol-ext -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css" />
     <script type="text/javascript" src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"></script>
     <style>
@@ -61,8 +58,6 @@
     <div id="g" class="graph" >
       <canvas id="myChart" ></canvas>
     </div>
-
-    
     <script type="text/javascript">
     // Layers
     var layers = [
@@ -94,18 +89,14 @@
       });
       console.log(hos)
       map.addLayer(hos);
-      
-      
       var select = new ol.interaction.Select({})
       map.addInteraction(select)
-
     var search = new ol.control.SearchFeature(
         {   
             source: vsource,
             property:'name'
         });
     map.addControl(search);
-
     // Select feature when click on the reference index
     search.on('select', function(e)
         {   select.getFeatures().clear();
@@ -119,7 +110,6 @@
     canFix: true,
     template: {
         title: 
-          // 'nom',   // only display the name
           function(f) {
             return f.get('name');
           },
@@ -133,16 +123,13 @@
         }
     }
   });
-  
   map.addOverlay (popup);
   map.on('click',(e)=>{
   map.forEachFeatureAtPixel(e.pixel,(feature,layer)=>{
-
       const name=feature.get('name');
       const d = new Date().getDate()
       const m = new Date().getMonth() + 1
       const y = new Date().getFullYear()
-
       const graphlink = `https://senu-back.herokuapp.com/daily/?d=${d}&m=${m}&y=${y}&id=${name}`
             axios({
                     url: graphlink,
@@ -152,7 +139,6 @@
       var dt = []
       var dt_doc = []
       var dt_nrs = []
-      
       res.data.features.forEach(element=>{
       lbs.push(element.hour)
       dt.push(element.admitted)
@@ -191,7 +177,6 @@
             backgroundColor: 'beige',
             borderWidth: 1
         }
-      
       ]
     },
     options: {
@@ -206,11 +191,8 @@
           }
         });
             })
-
-
     })
   })
-
   function decide(hour){
     if (hour<10){
       return '0'+hour;
@@ -219,6 +201,5 @@
     }
   }
     </script>
-    
 </body>
 </html>

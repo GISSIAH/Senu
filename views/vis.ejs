@@ -2,13 +2,16 @@
 <html>
 <head>
     <title>SENU</title>
+    <!-- Openlayers -->
     <link rel="stylesheet" href="https://openlayers.org/en/latest/css/ol.css" />
     <script type="text/javascript" src="https://openlayers.org/en/latest/build/ol.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.css"/>
      <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.js"></script>
+    
     <script src="https://cdn.polyfill.io/v2/polyfill.min.js?features=requestAnimationFrame,Element.prototype.classList,URL,Object.assign"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/6.2.0/d3.js"></script>
+    <!-- ol-ext -->
     <link rel="stylesheet" href="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.css" />
     <script type="text/javascript" src="https://cdn.rawgit.com/Viglino/ol-ext/master/dist/ol-ext.min.js"></script>
     <style>
@@ -22,6 +25,7 @@
         }
 
         .map {
+          padding-top: 50px;
           height: 400px;
           width: 100%;
         }
@@ -44,21 +48,60 @@
    stroke: green;
    stroke-width: 5px;
 }
+.button_cont a{
+color: #fff !important;
+text-transform: uppercase;
+text-decoration: none;
+background: #ed3330;
+padding: 20px;
+border-radius: 5px;
+display: inline-block;
+border: none;
+transition: all 0.4s ease 0s;
+}
+.links{
+        position:absolute;
+    top:50px;
+    right: 10px;
+    } 
+.btn-secondary{
+    background-color: rgb(39, 194, 52);
+    color: white;
+    border-radius: 25px;
+    padding: 1em 1.5em;
+    text-decoration: none;
+    text-transform: uppercase;
+    }
+.update{
+    padding-top: 25px;
+}
       </style>
 </head>
 
 <body >
-    <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
-    <div id="update">
+    
+    <div class="update">
+      <a href="/dashboard" class="btn btn-secondary">Dashboard</a>
       <p>Lastly updated on:<%=time%></p>
-
     </div>
+    <div class="links">
+    
+      <a href="/help" class="btn btn-secondary">Help</a>
+      <a href="/users/logout" class="btn btn-secondary">Logout</a>
+  
+  </div>
   
     <div id="map" class="map" ></div>
     <div id="g" class="graph" >
       <canvas id="myChart" ></canvas>
+      <div class="button_cont" align="center"></div>
     </div>
+
+    
     <script type="text/javascript">
+
+
+
     // Layers
     var layers = [
         new ol.layer.Tile({
@@ -89,14 +132,18 @@
       });
       console.log(hos)
       map.addLayer(hos);
+      
+      
       var select = new ol.interaction.Select({})
       map.addInteraction(select)
+
     var search = new ol.control.SearchFeature(
         {   
             source: vsource,
             property:'name'
         });
     map.addControl(search);
+
     // Select feature when click on the reference index
     search.on('select', function(e)
         {   select.getFeatures().clear();
@@ -110,6 +157,7 @@
     canFix: true,
     template: {
         title: 
+          // 'nom',   // only display the name
           function(f) {
             return f.get('name');
           },
@@ -123,13 +171,19 @@
         }
     }
   });
+  
   map.addOverlay (popup);
   map.on('click',(e)=>{
   map.forEachFeatureAtPixel(e.pixel,(feature,layer)=>{
+
+      var gr = document.getElementsByClassName('button_cont')[0];
+      gr.innerHTML="";
       const name=feature.get('name');
-      const d = new Date().getDate()
-      const m = new Date().getMonth() + 1
-      const y = new Date().getFullYear()
+      //const d = new Date().getDate()
+      const d = '17';
+      const m = '1'
+      const y = '2021'
+
       const graphlink = `https://senu-back.herokuapp.com/daily/?d=${d}&m=${m}&y=${y}&id=${name}`
             axios({
                     url: graphlink,
@@ -139,12 +193,13 @@
       var dt = []
       var dt_doc = []
       var dt_nrs = []
+      
       res.data.features.forEach(element=>{
       lbs.push(element.hour)
       dt.push(element.admitted)
       dt_doc.push(element.doctors)
       dt_nrs.push(element.nurses)
-    })
+  })
   var ctx = document.getElementById('myChart').getContext('2d');
   var myChart = new Chart(ctx, {
     type: 'bar',
@@ -177,6 +232,7 @@
             backgroundColor: 'beige',
             borderWidth: 1
         }
+      
       ]
     },
     options: {
@@ -190,9 +246,45 @@
               }
           }
         });
-            })
+        var button = document.createElement('a');
+        button.innerHTML="Download Data";
+        
+        gr.append(button);
+        const dlink = `https://senu-back.herokuapp.com/files/daily/?id=${name}&d=${d}&m=1&y=2021`
+        button.href=dlink
+
+        })
+
+
     })
   })
+/*
+  let i = document.querySelector('input'),
+  o = document.querySelector('output');
+  o.innerHTML = i.value;
+//
+  i.addEventListener('input', function () {
+  map.removeLayer(hos)
+  o.innerHTML = i.value;
+  const d=decide(new Date().getDay())
+  const h = decide(i.value)
+  const m= new Date().getMonth()
+  const url = `http://localhost:5000/local/specific/?d=16&h=${h}&m=11`
+  var vsource = new ol.source.Vector({
+        url:url,
+        format: new ol.format.GeoJSON()
+      })
+  var new_hos = new ol.layer.VectorImage({
+      source:vsource,
+      visible:true,
+      title:'HOSPITALS'
+  });
+  console.log(new_hos)
+  map.addLayer(new_hos);
+      
+
+  }, false);
+  */
   function decide(hour){
     if (hour<10){
       return '0'+hour;
@@ -200,6 +292,8 @@
       return hour
     }
   }
+  function Download(){}
     </script>
+    
 </body>
 </html>

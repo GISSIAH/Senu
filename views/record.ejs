@@ -26,12 +26,12 @@ body {
   font-size: 12px;
   line-height: 30px;
   color: #777;
-  background: #36a0bb;
+  background: rgb(32, 147, 214);
 }
 
-.container {
+.con{
   max-width: 500px;
-  width: 100%;
+  
   margin: 0 auto;
   position: relative;
 }
@@ -153,14 +153,36 @@ fieldset {
 .a{
   position: relative;
 }
+.links{
+    position:absolute;
+    top:50px;
+    right: 10px;
+    }
+    .btn-secondary{
+        background-color: rgb(39, 194, 52);
+        color: white;
+        border-radius: 25px;
+        padding: 1em 1.5em;
+        text-decoration: none;
+    text-transform: uppercase;
+    }
+
 </style>
+
 </head>
-    </head>
 <body>
-<a href="/dashboard" class="btn btn-secondary">Dashboard</a>
-<div class="container">  
+  <div class="links">
+    
+    <a href="/help" class="btn btn-secondary">Help</a>
+    <a href="/users/logout" class="btn btn-secondary">Logout</a>
+
+</div>
+
+  
+<div class="con">  
     <form id="contact" action="" method="post">
       <h3>Enter Records </h3>
+      
       <fieldset>
         <input  name="name" type="text" tabindex="1" required autofocus value="">
       </fieldset>
@@ -168,21 +190,23 @@ fieldset {
         <input placeholder="Type of Hospital" name="type" type="text" tabindex="2" required>
       </fieldset>
       <fieldset>
-        Patients
         <input placeholder="Patients Number here" name="admitted" type="number" tabindex="3" required>
       </fieldset>
       <fieldset>
-        Doctors
         <input placeholder="Doctors Number here" name="doctors" type="number" tabindex="4" required>
       </fieldset>
       <fieldset>
-        Nurses
         <input placeholder="Nurses Number here" name="nurses" type="number" tabindex="4" required>
       </fieldset>
+      
       <fieldset>
         <button name="submit" type="submit" name="send "id="contact-submit" data-submit="...Sending">Submit</button>
       </fieldset>
+
     </form>
   </div>
+  
+
+  
 </body>
 </html>

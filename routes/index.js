@@ -7,7 +7,7 @@ const { ensureAuthenticated, forwardAuthenticated } = require("../config/auth");
 router.get("/", forwardAuthenticated, (req, res) => res.render("welcome"));
 
 // Dashboard
-router.get("/dashboard", ensureAuthenticated, (req, res) =>
+router.get("/dashboard", (req, res) =>
   res.render("dashboard", {
     user: req.user,
   })
@@ -17,7 +17,7 @@ router.get("/help", (req, res) => {
   res.render("help");
 });
 //Visualization page
-router.get("/senu", ensureAuthenticated, (req, res) => {
+router.get("/senu", (req, res) => {
   axios
     .get("https://senu-back.herokuapp.com/uptime")
     .then(function (data) {
@@ -30,12 +30,12 @@ router.get("/senu", ensureAuthenticated, (req, res) => {
     });
 });
 //Data entry page
-router.get("/entry", ensureAuthenticated, (req, res) => {
+router.get("/entry",  (req, res) => {
   res.render("record", {
     user: req.user,
   });
 });
-router.post("/entry", ensureAuthenticated, (req, res) => {
+router.post("/entry",  (req, res) => {
   var new_body = {
     name: req.body.name,
     type: req.body.type,
